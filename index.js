@@ -3,47 +3,44 @@
 document.addEventListener(
   "keydown", (event) => {
     let id = event.key;
-    runFunctionDrum(id);
+    console.log(keySwitch(id));
   }
 );
 
 document.addEventListener(
   "click", (event) => {
     let id = event.target.id;
-    runFunctionDrum(id);
+    console.log(keySwitch(id));
   });
 
-const runFunctionDrum = (id) => {
-  console.log(id);
-  if (id != null && id != undefined && id != "" && id.length == 1) {
-    const isHaveKey = keyList.find((key) => key.key === id);
-    if (isHaveKey != null && isHaveKey != undefined) {
-      console.log(isHaveKey)
-      setTextColor(id);
-      playSound(isHaveKey.sound);
-      timeoutTextColor(id);
-    } else {
-      console.log("Not Config Key : " + id)
-    }
+const keySwitch = (key) => {
+  switch (key) {
+    case "w": runFunctionDrum(key, keyList[key]); return "crash";
+    case "a": runFunctionDrum(key, keyList[key]); return "kick-bass";
+    case "s": runFunctionDrum(key, keyList[key]); return "snare";
+    case "d": runFunctionDrum(key, keyList[key]); return "tom-1";
+    case "j": runFunctionDrum(key, keyList[key]); return "tom-2";
+    case "k": runFunctionDrum(key, keyList[key]); return "tom-3";
+    case "l": runFunctionDrum(key, keyList[key]); return "tom-4";
+    default: return "Not Config Key : " + key;
   }
-}
+};
 
-const keyList = [
-  { key: "w", sound: "sounds/crash.mp3" },
-  { key: "a", sound: "sounds/kick-bass.mp3" },
-  { key: "s", sound: "sounds/snare.mp3" },
-  { key: "d", sound: "sounds/tom-1.mp3" },
-  { key: "j", sound: "sounds/tom-2.mp3" },
-  { key: "k", sound: "sounds/tom-3.mp3" },
-  { key: "l", sound: "sounds/tom-4.mp3" }
-];
-
-const playSound = (sound) => { new Audio(sound).play(); }
-
-const setTextColor = (id) => { document.getElementById(id).style.color = "#000"; };
-
-const timeoutTextColor = (id) => {
+const runFunctionDrum = (id, sound) => {
+  document.getElementById(id).style.color = "#000";
+  new Audio(sound).play();
   setTimeout(function () {
     document.getElementById(id).style.color = "#da0463";
   }, 200);
+
+}
+
+const keyList = {
+  "w": "sounds/crash.mp3",
+  "a": "sounds/kick-bass.mp3",
+  "s": "sounds/snare.mp3",
+  "d": "sounds/tom-1.mp3",
+  "j": "sounds/tom-2.mp3",
+  "k": "sounds/tom-3.mp3",
+  "l": "sounds/tom-4.mp3"
 };
